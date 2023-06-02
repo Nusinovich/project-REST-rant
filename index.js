@@ -8,12 +8,12 @@ app.engine('jsx', require('express-react-views').createEngine())
 app.use ('/places', require('./controllers/places'))
 
 app.get ('/', function (req, res){
-res.render('home')
+res.render('Home')
 })
 
 
 app.get ('*', function (req, res){
-    res.status(404).send("<h1>404 Error, page is not available</h1>")
+res.render('error404')
 })
 
 app.listen(process.env.PORT)
