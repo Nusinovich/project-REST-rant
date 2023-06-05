@@ -4,7 +4,7 @@ function Def (html){
         <html>
             <head>
                 <title>Title</title>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></link>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"></link>
                 <link rel='stylesheet' href='/css/style.css'></link>
             </head>
             <body>
