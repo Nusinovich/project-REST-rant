@@ -1,9 +1,17 @@
 const router = require('express').Router()
 const places = require('../models/places.js')
+const express = require('express')
 
+//index
+router.get('/', (req, res)=>{  
+  res.render('./places/index', {places})
+})
+
+//new route
 router.get('/new', (req, res) => {
   res.render('places/new')
 })
+
 
 router.get('/:id/edit', (req, res) => {
   let id = Number(req.params.id)
@@ -19,7 +27,6 @@ router.get('/:id/edit', (req, res) => {
 })
 
 
-
 router.get('/:id', (req, res) => {
   let id = Number(req.params.id)
   if (isNaN(id)) {
@@ -32,6 +39,9 @@ router.get('/:id', (req, res) => {
     res.render('places/show', {place: places[id], id})
   }
 })
+
+
+
 
 router.delete('/:id', (req, res) => {
   let id = Number(req.params.id)
@@ -62,10 +72,6 @@ router.post('/', (req, res) => {
   }
   places.push(req.body)
   res.redirect('/places')
-})
-
-router.get('/', (req, res)=>{  
-  res.render('./places/index', {places})
 })
 
 module.exports = router
