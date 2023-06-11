@@ -1,90 +1,65 @@
 const express = require("express");
 const router = express.Router();
-const places = require("../models/places.js");
+const db = require('../models');
 
-router.post("/", (req, res) => {
-  console.log(req.body);
-  if (!req.body.pic) {
-    req.body.pic = "http://placekitten.com/400/400";
-  }
-  if (!req.body.city) {
-    req.body.city = "Anytown";
-  }
-  if (!req.body.state) {
-    req.body.state = "USA";
-  }
-  places.push(req.body);
-  res.redirect("/places");
-});
+//INDEX ROUTE
+router.get('/', (req, res) => {
+  db.place.find()
+  .then(places =>{
+    res.render('places/index', {places})
+  })
+  .catch(err => {
+    console.log(err)
+    res.render('404: Wrong Page')
+  })
+})
 
-router.get("/new", (req, res) => {
-  res.render("places/new");
-});
+//CREATE ROUTE
+router.post('/', (req, res) => {
+  db.place.create(req.body)
+  .then(() => {
+    res.redirect('/places')
+  })
+  .catch(err => {
+    console.log(err)
+    res.render('404: (create) Wrong Page')
+  })
+})
 
-//show
-router.get("/:id", (req, res) => {
-  let id = Number(req.params.id);
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!places[id]) {
-    res.render("error404");
-  } else {
-    res.render("places/show", { place: places[id], id });
-  }
-});
-//delete
-router.delete("/:id", (req, res) => {
-  let id = Number(req.params.id);
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!places[id]) {
-    res.render("error404");
-  } else {
-    places.splice(id, 1);
-    res.redirect("/places");
-  }
-});
-//Edit
-router.get("/:id/edit", (req, res) => {
-  let id = Number(req.params.id);
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!places[id]) {
-    res.render("error404");
-  } else {
-    res.render("places/edit", { place: places[id], id: id });
-  }
-});
+//RENDER NEW PAGE ROUTE
+router.get('/new', (req, res) => {
+  res.render('places/new')
+})
 
-router.put("/:id", (req, res) => {
-  let id = Number(req.params.id);
+//SHOW NAME ROUTE
+router.get('/:id', (req, res) => {
+  db.place.findById(req.params.id)
+  .then(place =>{
+    res.render('places/show', {place})
+  })
+  .catch(err => {
+    console.log(err)
+    res.render('404: (show) Wrong Page')
+  })
+})
 
-  if (isNaN(id)) {
-    res.render("error404");
-  } else if (!places[id]) {
-    res.render("error404");
-  } else {
-    // Dig into req.body and make sure data is valid
-    if (!req.body.pic) {
-      // Default image if one is not provided
-      req.body.pic = "http://placekitten.com/400/400";
-    }
-    if (!req.body.city) {
-      req.body.city = "Anytown";
-    }
-    if (!req.body.state) {
-      req.body.state = "USA";
-    }
+router.delete('/:id', (req, res) => {
+  res.send('DELETE /places/:id stub')
+})
 
-    // Save the new data into places[id]
-    places[id] = req.body;
-    res.redirect(`/places/${id}`);
-  }
-});
+router.get('/:id/edit', (req, res) => {
+  res.send('GET edit from stub')
+})
 
-//   GET /places
-router.get("/", (req, res) => {
-  res.render("places/index", { places });
-});
+router.post('/:id/rant', (req, res) =>{
+  res.send('GET /places/:id/rant stub')
+})
+
+router.delete('/:id/rant/:rantId', (req, res) =>{
+  res.send('GET /places/:id/rant/:rantId stub')
+})
+
+
+
 
 module.exports = router;

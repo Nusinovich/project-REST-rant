@@ -17,6 +17,7 @@ function show (data) {
           <section>
             <h2>Description</h2>
             <p>Located in {data.place.city}, {data.place.state}</p>
+            <p>{data.place.name} was founded in {data.place.founded}</p>
             
           </section>
           <section>

@@ -1,3 +1,9 @@
+
+
+body{
+  border: 50px;
+}
+
 h1 {
     text-align: center;
     color: cornflowerblue;
@@ -6,11 +12,11 @@ h1 {
 nav {
     background-color: cornflowerblue;
     padding: 10px;
+    mar
 }
 
 nav ul {
-    list-style-type: none;
-    margin: 0;
+    margin: 10px;
 }
 
 nav li {
@@ -19,22 +25,53 @@ nav li {
 }
 
 nav a {
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
 nav a:hover {
-    color: pink;
+    color: rgb(253, 253, 253);
     text-decoration: none;
 }
 
 body {
-  background-color: lightblue;
+  background-color: lightgray;
   text-align: center;
+  margin: 50px;
 }
 
 main {
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-top: 20px;
+  margin-right: 3px;
+  margin-left: 3px;
   background-color: white;
 }
+
+
+.col-sm-6, h2{
+  margin-top: 20px;
+  color: black;
+}
+
+.col-sm-6 h2 a{
+  margin-top: 20px;
+  color: black;
+  
+}
+
+.col-sm-6 h2 a:hover{
+  color: blue;
+  
+}
+
+
+#places, h1{
+  color: black;
+  margin: 20px;
+}
+
+.row{
+  margin: 20px;
+}
+
+
