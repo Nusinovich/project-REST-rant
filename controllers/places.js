@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../models');
+const comment = require("../models/comment");
 
 //INDEX ROUTE
 router.get('/', (req, res) => {
@@ -34,7 +35,9 @@ router.get('/new', (req, res) => {
 //SHOW NAME ROUTE
 router.get('/:id', (req, res) => {
   db.place.findById(req.params.id)
+  .populate('comments')
   .then(place =>{
+    console.log(place.comments)
     res.render('places/show', {place})
   })
   .catch(err => {
@@ -58,6 +61,36 @@ router.post('/:id/rant', (req, res) =>{
 router.delete('/:id/rant/:rantId', (req, res) =>{
   res.send('GET /places/:id/rant/:rantId stub')
 })
+
+router.post('/:id/comment', (req, res) => {
+  console.log(req.body)
+  db.places.findById(req.params.id)
+  .then(place => {
+    db.comment.create(req.body)
+    .then(comment => {
+      place.comments.push(comment.id)
+      place.save()
+      .then(()=>{
+        res.redirect(`/places/${req.params.id}`)
+      })
+      .catch(err =>{
+        res.render('error404')
+      })
+    })
+  })
+  .catch(err => {
+    res.render('error404')
+  })
+  if (req.body.rent){
+    req.body.rant = true
+  }
+  else {
+    req.body.rant = false
+  }
+  req.body.rant = req.body.rant ? true: false
+  res.send('GET /places/:id/comment stub')
+})
+
 
 
 
