@@ -64,35 +64,27 @@ router.delete('/:id/rant/:rantId', (req, res) =>{
 
 router.post('/:id/comment', (req, res) => {
   console.log(req.body)
-  db.places.findById(req.params.id)
+  db.place.findById(req.params.id)
   .then(place => {
-    db.comment.create(req.body)
-    .then(comment => {
-      place.comments.push(comment.id)
-      place.save()
-      .then(()=>{
-        res.redirect(`/places/${req.params.id}`)
+      db.Comment.create(req.body)
+      .then(comment => {
+          place.comments.push(comment.id)
+          place.save()
+          .then(() => {
+              res.redirect(`/places/${req.params.id}`)
+          })
       })
-      .catch(err =>{
-        res.render('error404')
+      .catch(err => {
+          console.log('err', err)
+          res.render('error404')
       })
-    })
   })
-  .catch(err => {
-    res.render('error404')
-  })
-  if (req.body.rent){
-    req.body.rant = true
-  }
-  else {
-    req.body.rant = false
-  }
-  req.body.rant = req.body.rant ? true: false
-  res.send('GET /places/:id/comment stub')
 })
+ 
 
 
 
 
 
 module.exports = router;
+
